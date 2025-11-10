@@ -292,3 +292,56 @@ function handleLogout() {
   alert('Logged out successfully!');
   location.reload();
 }
+
+// Contact form handling
+function handleContactSubmit(event) {
+  event.preventDefault();
+  const nameInput = document.getElementById('contactName');
+  const emailInput = document.getElementById('contactEmail');
+  const messageInput = document.getElementById('contactMessage');
+  const responseDiv = document.getElementById('contactResponse');
+
+  // Clear previous errors
+  document.getElementById('errorName').textContent = '';
+  document.getElementById('errorEmail').textContent = '';
+  document.getElementById('errorMessage').textContent = '';
+
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const message = messageInput.value.trim();
+
+  let isValid = true;
+  if (!name) {
+    document.getElementById('errorName').textContent = 'Please enter your name';
+    isValid = false;
+  }
+  const emailPattern = /\S+@\S+\.[\S]+/;
+  if (!email || !emailPattern.test(email)) {
+    document.getElementById('errorEmail').textContent = 'Please enter a valid email';
+    isValid = false;
+  }
+  if (!message || message.length < 5) {
+    document.getElementById('errorMessage').textContent = 'Message should be at least 5 characters';
+    isValid = false;
+  }
+
+  if (!isValid) return;
+
+  // Show thank-you message dynamically
+  responseDiv.innerHTML = `
+    <div class="border border-green-500/30 rounded p-4 bg-neutral-900 text-green-300">
+      Thank you, <span class="text-green-400 font-semibold">${name}</span>! We'll reach out to <span class="text-green-400 font-semibold">${email}</span> soon.
+    </div>
+  `;
+
+  // Optionally reset the form
+  nameInput.value = '';
+  emailInput.value = '';
+  messageInput.value = '';
+}
+
+// Footer year
+(function(){
+  const y = document.getElementById('footerYear');
+  if (y) y.textContent = new Date().getFullYear();
+})();
