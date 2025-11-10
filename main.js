@@ -15,7 +15,8 @@ fetch('https://fakestoreapi.com/products')
           <p class="text-green-300">Quantity: <span class="quantity">0</span></p>
           <div class="flex gap-2">
             <button onclick="addToCart(this)" class="bg-green-600 text-white px-4 py-2 rounded flex-1">Add to Cart</button>
-            <button onclick="removeFromCart(this)" class="bg-red-600 text-white px-4 py-2 rounded flex-1 opacity-50 cursor-not-allowed" disabled>Remove</button>
+
+            <button onclick="removeFromCart(this)" class="bg-red-600 text-white px-4 py-2 rounded flex-1 opacity-50 cursor-not-allowed" disabled id="removeBtn">Remove</button>
           </div>
         </div>
       `;
@@ -33,7 +34,7 @@ function addToCart(button) {
   card.setAttribute('data-count', count);
   card.querySelector('.quantity').textContent = count;
   
-  const removeBtn = card.querySelectorAll('button')[1];
+  const removeBtn = card.querySelector('#removeBtn');
   removeBtn.disabled = false;
   removeBtn.classList.remove('opacity-50', 'cursor-not-allowed');
   
