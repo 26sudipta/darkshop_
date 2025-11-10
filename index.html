@@ -28,13 +28,27 @@
           <button onclick="addMoney()" class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">
             Add Money
           </button>
-          <button class="font-mono text-xs uppercase tracking-wider border border-green-500/50 text-green-300 px-4 py-2 rounded-md hover:bg-green-500/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500/60">
-            Sign Up
-          </button>
+          <div id="authButtons">
+            <a href="login.html" class="font-mono text-xs uppercase tracking-wider border border-green-500/50 text-green-300 px-4 py-2 rounded-md hover:bg-green-500/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500/60 inline-block">
+              Login
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </nav>
+
+  <!-- Sliding Banner -->
+  <section class="bg-neutral-900">
+    <div class="relative w-full">
+      <div id="bannerViewport" class="overflow-hidden">
+        <div id="bannerSlider" class="flex transition-transform duration-500"></div>
+      </div>
+      <!-- Controls -->
+      <button onclick="bannerPrev()" class="absolute left-6 top-1/2 -translate-y-1/2 bg-neutral-900/70 hover:bg-neutral-900 text-green-300 border border-green-500/40 rounded px-3 py-2">‹</button>
+      <button onclick="bannerNext()" class="absolute right-6 top-1/2 -translate-y-1/2 bg-neutral-900/70 hover:bg-neutral-900 text-green-300 border border-green-500/40 rounded px-3 py-2">›</button>
+    </div>
+  </section>
 
   <!-- Products  and cart -->
   <div class="flex gap-4 p-4">

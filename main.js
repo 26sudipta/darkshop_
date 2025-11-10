@@ -5,6 +5,58 @@ let balance = parseFloat(localStorage.getItem('balance')) || 1000;
 // Load balance from localStorage
 document.getElementById('navTotal').textContent = '$' + balance.toFixed(2);
 
+// Check login status
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+if (currentUser) {
+  document.getElementById('authButtons').innerHTML = `
+    <span class="text-green-300 mr-2">Welcome, ${currentUser.username}</span>
+    <button onclick="handleLogout()" class="font-mono text-xs uppercase tracking-wider border border-green-500/50 text-green-300 px-4 py-2 rounded-md hover:bg-green-500/10">
+      Logout
+    </button>
+  `;
+}
+
+// --- Sliding Banner ---
+const bannerImages = [
+  { url: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg', title: 'Welcome to SmartShop' },
+  { url: 'https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg', title: 'Best Deals Available' },
+  { url: 'https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg', title: 'Shop Smart, Save More' },
+  { url: 'https://images.pexels.com/photos/5632371/pexels-photo-5632371.jpeg', title: 'Quality Products Guaranteed' }
+];
+
+const bannerSlider = document.getElementById('bannerSlider');
+if (bannerSlider) {
+  bannerImages.forEach(item => {
+    const slide = document.createElement('div');
+    // Increased height from h-56 md:h-80 to h-72 md:h-96
+    slide.className = 'min-w-full h-72 md:h-96 relative';
+    slide.innerHTML = `
+      <div class=\"absolute inset-0 bg-cover bg-center\" style=\"background-image:url('${item.url}')\"></div>
+      <div class=\"absolute inset-0 bg-black/60\"></div>
+      <div class=\"absolute inset-0 flex items-center justify-center p-4 md:p-6\">
+        <h3 class=\"text-green-300 text-2xl md:text-3xl font-semibold text-center drop-shadow\">${item.title}</h3>
+      </div>
+    `;
+    bannerSlider.appendChild(slide);
+  });
+}
+
+let currentBanner = 0;
+function bannerGoTo(index) {
+  if (!bannerSlider) return;
+  const total = bannerImages.length;
+  currentBanner = (index + total) % total;
+  bannerSlider.style.transform = `translateX(-${currentBanner * 100}%)`;
+}
+
+function bannerPrev() { bannerGoTo(currentBanner - 1); }
+function bannerNext() { bannerGoTo(currentBanner + 1); }
+
+// Auto-advance every 5s
+if (bannerSlider) {
+  setInterval(() => bannerNext(), 5000);
+}
+
 fetch('https://fakestoreapi.com/products')
   .then(response => response.json())
   .then(data => {
@@ -232,4 +284,11 @@ function nextReview() {
   
   currentSlide = (currentSlide + 1) % (maxSlide + 1);
   slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+}
+
+// Logout function
+function handleLogout() {
+  localStorage.removeItem('currentUser');
+  alert('Logged out successfully!');
+  location.reload();
 }
