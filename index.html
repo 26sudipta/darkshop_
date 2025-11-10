@@ -60,6 +60,18 @@
       <button onclick="buyNow()" class="bg-green-600 text-white px-4 py-2 rounded mt-4 w-full">Buy Now</button>
     </div>
   </div>
+
+  <!-- Reviews Section -->
+  <div class="p-4 mt-8">
+    <h2 class="text-green-400 text-2xl font-bold mb-4">Customer Reviews</h2>
+    <div class="relative">
+      <div id="reviewsContainer" class="overflow-hidden">
+        <div id="reviewsSlider" class="flex transition-transform duration-500 gap-4"></div>
+      </div>
+      <button onclick="prevReview()" class="absolute left-0 top-1/2 -translate-y-1/2 bg-green-600 text-white px-3 py-2 rounded">‹</button>
+      <button onclick="nextReview()" class="absolute right-0 top-1/2 -translate-y-1/2 bg-green-600 text-white px-3 py-2 rounded">›</button>
+    </div>
+  </div>
   
   <script src="main.js"></script>
   </body>

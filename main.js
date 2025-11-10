@@ -108,3 +108,47 @@ function buyNow() {
   
   alert('Purchase successful!');
 }
+
+// Reviews carousel
+let currentSlide = 0;
+
+fetch('review.json')
+  .then(response => response.json())
+  .then(reviews => {
+    const slider = document.getElementById('reviewsSlider');
+    
+    reviews.forEach(review => {
+      const reviewCard = `
+        <div class="border border-green-500/30 p-4 rounded bg-neutral-900 min-w-[calc(33.333%-1rem)]">
+          <h3 class="text-green-400 font-bold mb-2">${review.name}</h3>
+          <p class="text-neutral-300 mb-2">${review.comment}</p>
+          <p class="text-green-300">Rating: ${review.rating}/5</p>
+          <p class="text-neutral-500 text-sm mt-2">${review.date}</p>
+        </div>
+      `;
+      slider.innerHTML += reviewCard;
+    });
+    
+    // Auto slide every 10 seconds
+    setInterval(nextReview, 10000);
+  });
+
+function prevReview() {
+  const slider = document.getElementById('reviewsSlider');
+  const totalReviews = slider.children.length;
+  const slidesToShow = 3;
+  const maxSlide = Math.ceil(totalReviews / slidesToShow) - 1;
+  
+  currentSlide = (currentSlide - 1 + maxSlide + 1) % (maxSlide + 1);
+  slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+}
+
+function nextReview() {
+  const slider = document.getElementById('reviewsSlider');
+  const totalReviews = slider.children.length;
+  const slidesToShow = 3;
+  const maxSlide = Math.ceil(totalReviews / slidesToShow) - 1;
+  
+  currentSlide = (currentSlide + 1) % (maxSlide + 1);
+  slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+}
