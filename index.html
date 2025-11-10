@@ -23,7 +23,7 @@
 
         <div class="flex items-center gap-4">
           <h1 class="font-mono text-lg">
-            <span class="text-green-300 font-semibold">$1000</span>
+            <span class="text-green-300 font-semibold" id="navTotal">$1000</span>
           </h1>
           <button class="font-mono text-xs uppercase tracking-wider border border-green-500/50 text-green-300 px-4 py-2 rounded-md hover:bg-green-500/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500/60">
             Sign Up
@@ -34,14 +34,30 @@
   </nav>
 
   <!-- Products  and cart -->
-  <div>
+  <div class="flex gap-4 p-4">
     <!-- Products -->
-    <div id="Products" class="grid grid-cols-3 gap-4 p-4">
+    <div id="Products" class="grid grid-cols-3 gap-4 flex-1">
       
     </div>
     <!-- cart section -->
-    <div id="cart">
+    <div id="cart" class="p-4 border border-green-500/30 rounded w-80">
+      <h2 class="text-green-400 text-xl mb-4">Cart</h2>
+      <div id="cartItems"></div>
       
+      <div class="mt-4 text-green-300">
+        <p>Total Products: <span id="totalProducts">0</span></p>
+        <p>Subtotal: $<span id="cartTotal">0</span></p>
+        <p>Delivery Charge: $<span id="deliveryCharge">5</span></p>
+        <p>Discount: $<span id="discount">0</span></p>
+        <p class="text-green-400 font-bold text-xl">Final Total: $<span id="finalTotal">0</span></p>
+      </div>
+      
+      <div class="mt-4">
+        <input type="text" id="couponInput" placeholder="Enter SMART10" class="bg-neutral-800 text-green-300 px-3 py-2 rounded">
+        <button onclick="applyCoupon()" class="bg-green-600 text-white px-4 py-2 rounded ml-2">Apply Coupon</button>
+      </div>
+      
+      <button onclick="buyNow()" class="bg-green-600 text-white px-4 py-2 rounded mt-4 w-full">Buy Now</button>
     </div>
   </div>
   
