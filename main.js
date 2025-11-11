@@ -16,9 +16,16 @@ if (currentUser) {
   `;
 }
 
+// Toggle mobile nav menu
+function toggleNav() {
+  const menu = document.getElementById('navMenu');
+  if (!menu) return;
+  menu.classList.toggle('hidden');
+}
+
 // --- Sliding Banner ---
 const bannerImages = [
-  { url: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg', title: 'Welcome to SmartShop' },
+  { url: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg', title: 'Welcome to DarkShop_' },
   { url: 'https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg', title: 'Best Deals Available' },
   { url: 'https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg', title: 'Shop Smart, Save More' },
   { url: 'https://images.pexels.com/photos/5632371/pexels-photo-5632371.jpeg', title: 'Quality Products Guaranteed' }
@@ -28,13 +35,15 @@ const bannerSlider = document.getElementById('bannerSlider');
 if (bannerSlider) {
   bannerImages.forEach(item => {
     const slide = document.createElement('div');
-    // Increased height from h-56 md:h-80 to h-72 md:h-96
-    slide.className = 'min-w-full h-72 md:h-96 relative';
+    // Responsive heights: small -> h-56, sm -> h-72, md -> h-96, lg -> full screen
+    slide.className = 'min-w-full h-56 sm:h-72 md:h-96 lg:h-screen relative overflow-hidden';
     slide.innerHTML = `
-      <div class=\"absolute inset-0 bg-cover bg-center\" style=\"background-image:url('${item.url}')\"></div>
+      <div class=\"absolute inset-0 bg-cover bg-center transform scale-105\" style=\"background-image:url('${item.url}')\"></div>
       <div class=\"absolute inset-0 bg-black/60\"></div>
-      <div class=\"absolute inset-0 flex items-center justify-center p-4 md:p-6\">
-        <h3 class=\"text-green-300 text-2xl md:text-3xl font-semibold text-center drop-shadow\">${item.title}</h3>
+      <div class=\"absolute inset-0 flex flex-col items-center justify-center p-4 md:p-6 gap-3\">
+        <h3 class=\"text-green-300 text-3xl md:text-4xl font-extrabold text-center drop-shadow-lg\">${item.title}</h3>
+        <p class=\"text-neutral-300 max-w-2xl text-center\">Explore curated deals and quality products. Shop now and save.</p>
+        <a href=\"#Products\" class=\"mt-2 inline-block bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded shadow-lg text-sm\">Shop Now</a>
       </div>
     `;
     bannerSlider.appendChild(slide);
@@ -65,19 +74,22 @@ fetch('https://fakestoreapi.com/products')
     const productsDiv = document.getElementById('Products');
     data.map((product, index) => {
       const card = `
-        <div class="border border-green-500/30 p-4 rounded" data-id="${product.id}" data-count="0">
-          <img src="${product.image}" alt="${product.title}" class="w-full h-48 object-contain">
-          <h3 class="text-green-300">${product.title}</h3>
-          <p class="text-green-400">$<span class="price">${product.price}</span></p>
-          <p class="text-green-200">Rating: ${product.rating.rate}</p>
-          <p class="text-green-300">Quantity: <span class="quantity">0</span></p>
-          <div class="flex gap-2">
-            <button onclick="addToCart(this)" class="bg-green-600 text-white px-4 py-2 rounded flex-1">Add to Cart</button>
-
-            <button onclick="removeFromCart(this)" class="bg-red-600 text-white px-4 py-2 rounded flex-1 opacity-50 cursor-not-allowed" disabled id="removeBtn">Remove</button>
-          </div>
-        </div>
-      `;
+            <div class="bg-neutral-950 border border-green-500/20 rounded-lg p-3 transform hover:scale-105 hover:shadow-2xl transition-all duration-200 flex flex-col h-full" data-id="${product.id}" data-count="0">
+              <div class="relative overflow-hidden rounded-md bg-neutral-900 p-4 flex items-center justify-center" style="height:220px">
+                <img src="${product.image}" alt="${product.title}" class="max-h-full object-contain">
+                <div class="absolute top-3 right-3 bg-green-700 text-white text-xs px-2 py-1 rounded">$<span class=\"price\">${product.price}</span></div>
+              </div>
+              <h3 class="text-green-300 mt-3 text-sm md:text-base line-clamp-2">${product.title}</h3>
+              <div class="flex items-center justify-between mt-2">
+                <div class="text-green-200 text-sm">Rating: ${product.rating.rate}</div>
+                <div class="text-green-300 text-sm">Qty: <span class="quantity">0</span></div>
+              </div>
+              <div class="flex gap-2 mt-4 mt-auto">
+                <button onclick="addToCart(this)" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex-1 shadow">Add</button>
+                <button onclick="removeFromCart(this)" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex-1 opacity-50 cursor-not-allowed" disabled id="removeBtn">Remove</button>
+              </div>
+            </div>
+          `;
       productsDiv.innerHTML += card;
     });
   });
