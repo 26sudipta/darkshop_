@@ -357,3 +357,32 @@ function handleContactSubmit(event) {
   const y = document.getElementById('footerYear');
   if (y) y.textContent = new Date().getFullYear();
 })();
+
+// Back to Top button behavior
+(function(){
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+
+  // Show after user scrolls down 300px
+  function onScroll() {
+    if (window.scrollY > 300) {
+      btn.classList.remove('hidden');
+      btn.classList.add('opacity-100');
+    } else {
+      btn.classList.add('hidden');
+      btn.classList.remove('opacity-100');
+    }
+  }
+
+  // Smooth scroll to top
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // hide after click
+    btn.classList.add('hidden');
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // initialize visibility
+  onScroll();
+})();
